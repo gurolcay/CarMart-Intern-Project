@@ -1,27 +1,32 @@
-import QtQuick 2.4
-import QtQuick.Controls 1.3
-import QtQuick.Window 2.2
-import QtQuick.Dialogs 1.2
-import QtQuick.Controls 1.2
-import QtQuick.Layouts 1.1
+import QtQuick 2.1
+import QtQuick.Window 2.0
 
-ApplicationWindow {
-    function dp(value){
-        return value *dpiScaleFactor
-    }
-    property alias stackViewController: stackView
-
-    id:root
-    title: qsTr("SSH CARS")
-    width: dp(473)
-    height: dp(679)
+Window {
     visible: true
-    color:"#76a5af"
+    width: 360
+    height: 360
 
-    StackView {
-        id: stackView
-        anchors.fill: parent
-        focus: true
-        initialItem: Qt.resolvedUrl("makesPage.qml")
+    property int intValue: 1
+
+
+
+    Text {
+        id: mainText
+        text: qsTr("Tikla")
+        font.pixelSize: 16
+        anchors.centerIn: parent
+        MouseArea{
+            anchors.fill: parent
+            onPressed: {
+                var data = JSON.parse(bridge.readData());
+                mainText.text = 'First Car: ' + data.Cars.Make.Acura.Model.ILX.Trim['2.4'][0].Name
+                console.log('JSON: ', JSON.stringify(data));
+            }
+        }
     }
+
+
+
 }
+
+
